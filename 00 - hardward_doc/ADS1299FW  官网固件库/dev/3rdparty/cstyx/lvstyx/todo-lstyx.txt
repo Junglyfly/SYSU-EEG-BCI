@@ -1,0 +1,84 @@
+
+lstyx todo
+==========
+
+now
+
+- design API
+- come up with backend links
+- investigate libusb api
+  - timeouts?
+    - yes, we have timeouts in ms.  don't know about bus behaviour, probably repeated tx-nak
+
+test
+
+later
+
+done
+
+- build a dll with mingw and try to load it with labview
+
+notes
+=====
+
+labview
+-------
+
+We use the Call External Function VI.  This is a magic VI which calls a particular function from a DLL when invoked.  You specify the signature of the function directly in a special configuration dialogue; LabView doesn't read DLLs, defs, header files, etc.
+
+There are some restrictions on what LabView can call, mostly with datatypes:
+
+- LabView doesn't have pointers, so you cannot declare a pointer arg (although you can use arrays, see below).  However, you can pass pointers as integers, which is useful for context structs, magic cookies, etc.  They should have the width of pointers on that platform (usually 32 bits).
+
+- LabView knows nothing about malloc, memory management etc.  If you have a function which expects a pointer to a buffer or something, pass an array of chars and make sure that it's big enough.  It's still probably best if the DLL allocates its own memory for this sort of thing, though.
+
+- No structs.  The CEF VI knows nothing of structs.  If you have a function which passes a naked struct (ugh! why?), you will have to wrap it in a function that passes a pointer.  Use pointers-cast-to-integers for this, as noted above.
+
+Other comments:
+
+- LabView does support arrays (and C strings) and passes these as pointers, but the LabView manual warns that DLL code should not use realloc() on them, on pain of crashing.  This indicates that LabView is (unsurprisingly) probably not using the C library malloc() system.  So, no realloc(), free(), etc. on pointers that LabView gives you.  It's probably best to treat them as immutables.
+
+- LabView doesn't like ints.  It wants to know exactly how long each number is.  It's best if numerics are restricted to types of known length like long, short, char etc.  This may be important, since there are now systems available which may use 64-bit ints (don't know for certain).
+
+- Windows: 
+
+building in mingw
+-----------------
+
+NI would have you believe that you must use the Compiler of Darkness* to build Windows DLLs for use with LabView, but it's not so.  You can use MinGW too.
+
+Suppose we have lvdll.h and lvdll.c, and we want to produce lvdll.dll.  First, we build lvdll.o:
+
+  mingw32-gcc -c -DBUILD_DLL lvdll.c
+
+(BUILD_DLL activates the customary dllexport keyword in lvdll.h.  Google for details.)
+
+We then link lvdll.o into lvdll.dll:
+
+  mingw32-gcc -shared -o lvdll.dll lvdll.o -Wl,--out-implib,lvdll.a
+
+Of course, we could link multiple object files into the DLL too.
+
+The --out-implib linker directive generates lvdll.a.  For LabView, that isn't really necessary, because LabView loads DLLs dynamically, so it doesn't need .a files, but you need it for dynamic linking with C.
+
+For those of you using Cygwin: you REALLY MUST build with either MinGW or -mno-cygwin.  If you build the DLL with Cygwin GCC, LabView will crash when it tries to load it.  Apparently LabView is highly allergic to cygwin.dll, which anything built by Cygwin depends on.
+
+* Visual C++.
+
+stdcall or c?
+-------------
+
+On Windows, LabView supports the "C" and Window$ STDCALL calling conventions for DLLs.
+
+The STDCALL ABI is used by most of the W32 API.  I haven't yet found out how to generate STDCALL DLLs with MinGW.  It doesn't seem to be that useful, in any case.
+
+If your function headers are preceded by __declspec (dllexport), you are using the C ABI.  This is a Micro$oft thing but is supported in MinGW.
+
+By the way, .DEF files are needed only for DLLs that don't use dllexport.  Apparently there are lots of those around.  Modern code uses dllexport and therefore don't need .DEF files.
+
+The LabView documentation doesn't recommend one over the other.  However, the default in the CEF VI is C, and a howto on NI's site [2] has you build a C library (using VC++ of course).
+
+It appears that these days, STDCALL isn't recommended for new designs.  We'll stick with C.
+
+[1] http://www.willus.com/mingw/yongweiwu_stdcall.html
+[2] http://zone.ni.com/devzone/conceptd.nsf/webmain/5CF9A9FFD774028586256869005FF2ED

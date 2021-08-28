@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>ads1299evm</name>
+	<comment></comment>
+	<projects>
+		<project>ADCProLib</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rtsc.xdctools.buildDefinitions.XDC.xdcNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>com.ti.ccstudio.managedbuild.core.ccsNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>ADSProLib.tcf</name>
+			<type>1</type>
+			<location>C:/work/CCSv4/DXPNextGen/dev/build/adcpro/ADCProLib/ADSProLib.tcf</location>
+		</link>
+		<link>
+			<name>myLink.cmd</name>
+			<type>1</type>
+			<location>C:/work/CCSv4/DXPNextGen/dev/build/adcpro/ADCProLib/myLink.cmd</location>
+		</link>
+	</linkedResources>
+</projectDescription>

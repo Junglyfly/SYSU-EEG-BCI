@@ -1,0 +1,1 @@
+工程使用VS code的PlatformIO插件基于arduino框架创建，所以编译时需要vs code安装PlatformIO扩展，并且在PlatformIO插件中安装esp32 arduino的板子定义。

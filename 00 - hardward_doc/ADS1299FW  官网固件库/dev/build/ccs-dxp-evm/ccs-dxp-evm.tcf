@@ -1,0 +1,314 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  All rights reserved. Property of Texas Instruments Incorporated.
+ *  Restricted rights to use, duplicate or disclose this code are
+ *  granted through contract.
+ *
+ */
+/*
+ *  ======== bigtime.tcf ========
+ *  Configuration script used to generate the example's configuration files
+ */
+
+utils.loadPlatform("ti.platforms.dsk5510");
+
+bios.enableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+
+/*
+ * Enable heaps in DARAM and define label SEG0 for heap usage.
+ */
+
+bios.DARAM.createHeap      = true;
+bios.DARAM.enableHeapLabel = true;
+bios.DARAM["heapLabel"]    = prog.extern("SEG0");
+bios.DARAM.heapSize        = 0x500;
+bios.MEM.BIOSOBJSEG = prog.get("DARAM");
+bios.MEM.MALLOCSEG = prog.get("DARAM");
+
+
+/*
+ *  Define the GBL memory model 
+ */
+
+bios.GBL.MEMORYMODEL = "LARGE";
+
+/*
+ *  Increase the buffer size of the LOG_system LOG object
+ */
+
+bios.LOG_system.bufLen = 512;
+
+/*
+ *  Create a trace LOG object for printing basic program output. 
+ */
+
+trace = bios.LOG.create("trace");
+trace.bufLen = 32;
+trace.logType = "circular";
+
+/* 
+ * Create LOG objects for printing output of each Clock. Also store these values
+ * in an array of LOG objects so property values can be set in a loop.
+ */
+
+var logArray = new Array();
+logArray["idlLog0"] = bios.LOG.create("idlLog0");
+logArray["prdLog0"] = bios.LOG.create("prdLog0");
+logArray["prdLog1"] = bios.LOG.create("prdLog1");
+logArray["tskLog0"] = bios.LOG.create("tskLog0");
+logArray["tskLog1"] = bios.LOG.create("tskLog1");
+
+/* Set the buffer length and log type of each log object */
+
+for (var i in logArray) { 
+    logArray[i].bufLen = 256;
+    logArray[i].logType = "circular";
+}
+
+/* 
+ * Create IDL object idlClock. This IDL object is mapped to the clockIdle 
+ * function.
+ */
+
+idlClock = bios.IDL.create("idlClock");
+idlClock["fxn"] = prog.extern("clockIdle");
+idlClock.calibration = 0;
+
+/* 
+ * Create PRD objects prdClock0 and prdClock1, both of which are mapped to the
+ * function clockPrd, but will run at different times because they have
+ * different periods.
+ */ 
+
+prdClock0 = bios.PRD.create("prdClock0");
+prdClock0.period = 1;
+prdClock0.mode = "continuous";
+prdClock0["fxn"] = prog.extern("clockPrd");
+prdClock0.arg0 = prog.extern("cl1");
+
+prdClock1 = bios.PRD.create("prdClock1");
+prdClock1.period = 1000;
+prdClock1.mode = "continuous";
+prdClock1["fxn"] = prog.extern("clockPrd");
+prdClock1.arg0 = prog.extern("cl2");
+
+/* Create two semaphores for code synchronization */
+sem0 = bios.SEM.create("sem0");
+sem0.count = 1;
+
+sem1= bios.SEM.create("sem1");
+sem1.count = 1;
+
+/* Create TSK objects task0 and task1, both mapped to the clockTask function */
+
+task0 = bios.TSK.create("task0");
+task0.priority = 1;
+task0.fxn = prog.extern("clockTask");
+task0.arg0 = prog.extern ("cl3");
+
+task1 = bios.TSK.create("task1");
+task1.priority = 1;
+task1.fxn = prog.extern("clockTask");
+task1.arg0 = prog.extern ("cl4");
+bios.PRD.instance("prdClock1").order = 1;
+bios.PRD.instance("prdClock0").destroy();
+bios.PRD.instance("prdClock1").destroy();
+bios.TSK.instance("TSK_idle").order = 1;
+bios.TSK.instance("task1").order = 2;
+bios.TSK.instance("task0").destroy();
+bios.TSK.instance("task1").destroy();
+bios.IDL.instance("LNK_dataPump").order = 1;
+bios.IDL.instance("RTA_dispatcher").order = 2;
+bios.IDL.instance("IDL_cpuLoad").order = 3;
+bios.IDL.instance("PWRM_idleDomains").order = 4;
+bios.IDL.instance("idlClock").destroy();
+bios.MEM.instance("FLASH").destroy();
+bios.MEM.instance("SDRAM").base = 0x020000;
+bios.MEM.instance("SDRAM").len = 0x1e0000;
+bios.MEM.instance("VECT").base = 0x000080;
+bios.MEM.instance("DARAM").base = 0x000100;
+bios.MEM.instance("DARAM").len = 0x5f00;
+bios.MEM.instance("SARAM2").destroy();
+bios.MEM.SYSSTACKSIZE = 0x0800;
+bios.MEM.SYSINITSEG = prog.get("SDRAM");
+bios.MEM.CINITSEG = prog.get("SDRAM");
+bios.MEM.PINITSEG = prog.get("SDRAM");
+bios.MEM.CONSTSEG = prog.get("SDRAM");
+bios.MEM.DATASEG = prog.get("SARAM");
+bios.MEM.BIOSSEG = prog.get("SDRAM");
+bios.MEM.ARGSSEG = prog.get("SARAM");
+bios.MEM.STACKSEG = prog.get("SARAM");
+bios.MEM.GBLINITSEG = prog.get("SDRAM");
+bios.MEM.TRCDATASEG = prog.get("SDRAM");
+bios.MEM.OBJSEG = prog.get("SDRAM");
+bios.MEM.NOMEMORYHEAPS = 0;
+bios.MEM.BSSSEG = prog.get("SARAM");
+bios.MEM.SWITCHSEG = prog.get("SARAM");
+bios.MEM.HWISEG = prog.get("DARAM");
+bios.MEM.SYSDATASEG = prog.get("SDRAM");
+bios.MEM.CIOSEG = prog.get("SDRAM");
+bios.MEM.HWISEG = prog.get("SDRAM");
+bios.MEM.instance("SDRAM").createHeap = 1;
+bios.MEM.instance("SDRAM").heapSize = 0x10000;
+bios.MEM.instance("SARAM").createHeap = 1;
+bios.MEM.instance("SARAM").heapSize = 0x1800;
+bios.MEM.MALLOCSEG = prog.get("SDRAM");
+bios.MEM.BIOSOBJSEG = prog.get("SARAM");
+bios.MEM.instance("SARAM1").createHeap = 1;
+bios.MEM.instance("SARAM1").heapSize = 0x80000;
+bios.MEM.BIOSOBJSEG = prog.get("SARAM1");
+bios.MEM.instance("SARAM").createHeap = 0;
+bios.MEM.instance("SARAM1").heapSize = 0x8000;
+bios.MEM.instance("DARAM").createHeap = 0;
+bios.RTDX.RTDXDATASEG = prog.get("SDRAM");
+bios.GBL.ENABLEALLTRC = 0;
+bios.GBL.INSTRUMENTED = 0;
+bios.MEM.STACKSEG = prog.get("SDRAM");
+bios.MEM.RTDXTEXTSEG = prog.get("SDRAM");
+bios.HWI.instance("HWI_INT2").fxn = prog.extern("_DXP_EXTINT_Isr");
+bios.HWI.instance("HWI_INT2").useDispatcher = 1;
+bios.HWI.instance("HWI_INT8").fxn = prog.extern("usbhw_isr");
+bios.HWI.instance("HWI_INT8").useDispatcher = 1;
+bios.HWI.instance("HWI_INT2").fxn = prog.extern("HWI_unused", "asm");
+bios.HWI.instance("HWI_INT2").useDispatcher = 0;
+bios.GBL.CLKIN = 12000;
+bios.GBL.MODIFYCLKMD = 0;
+bios.GBL.CLKOUT = 192.0000;
+bios.MEM.BIOSOBJSEG = prog.get("SDRAM");
+bios.MEM.SYSSTACKSIZE = 0x1000;
+bios.MEM.STACKSIZE = 0x0800;
+bios.MEM.ARGSSIZE = 0x0080;
+bios.GBL.CLKOUT = 200.0000;
+bios.MBX.create("test_mbx");
+bios.MBX.instance("test_mbx").messageSize = 4;
+bios.MBX.instance("test_mbx").length = 8;
+bios.MBX.instance("test_mbx").messageSize = 1;
+bios.MBX.instance("test_mbx").length = 1;
+bios.MEM.STACKSIZE = 0x1000;
+bios.MEM.ARGSSIZE = 0x2000;
+bios.MEM.ARGSSIZE = 0x1000;
+bios.MEM.STACKSIZE = 0x0800;
+bios.MEM.ARGSSIZE = 0x0400;
+bios.MEM.DATASEG = prog.get("SDRAM");
+bios.MEM.BSSSEG = prog.get("SDRAM");
+bios.MEM.TEXTSEG = prog.get("SDRAM");
+bios.MEM.BSSSEG = prog.get("SARAM");
+bios.MEM.DATASEG = prog.get("SARAM");
+bios.MEM.CIOSEG = prog.get("SARAM");
+bios.MEM.BIOSSEG = prog.get("SARAM");
+bios.MEM.create("SDRAM_UPPER");
+bios.MEM.instance("SDRAM_UPPER").comment = "upper SDRAM";
+bios.MEM.instance("SDRAM_UPPER").base = 0x600000;
+bios.MEM.instance("SDRAM_UPPER").len = 0x1f8000;
+bios.MEM.instance("SDRAM_UPPER").heapSize = 0x10000;
+bios.MEM.MALLOCSEG = prog.get("SDRAM_UPPER");
+bios.MEM.BIOSOBJSEG = prog.get("SDRAM_UPPER");
+bios.MEM.instance("SDRAM").createHeap = 0;
+bios.MEM.create("SINE");
+bios.MEM.instance("SINE").createHeap = 0;
+bios.MEM.instance("SINE").base = 0x200000;
+bios.MEM.instance("SINE").len = 0x200000;
+bios.MEM.instance("SINE").space = "data";
+bios.MEM.create("WAVEFORM");
+bios.MEM.instance("WAVEFORM").base = 0x200000;
+bios.MEM.instance("WAVEFORM").len = 0x200000;
+bios.MEM.instance("WAVEFORM").createHeap = 0;
+bios.MEM.instance("WAVEFORM").space = "data";
+bios.MEM.instance("SINE").base = 0x400000;
+bios.MEM.instance("SARAM1").destroy();
+bios.MEM.instance("SARAM").base = 0x080000;
+bios.MEM.instance("SARAM").len = 0x7c00;
+bios.MEM.instance("SARAM").base = 0x008000;
+bios.SEM.create("semInitSigCalc");
+bios.SEM.instance("sem0").destroy();
+bios.SEM.instance("sem1").destroy();
+bios.SEM.create("semStartSigCalc");
+bios.HWI.instance("HWI_INT2").fxn = prog.extern("DXP_EXTINT_isr");
+bios.HWI.instance("HWI_INT2").useDispatcher = 1;
+bios.HWI.instance("HWI_INT18").fxn = prog.extern("DXP_DMACH0_Isr");
+bios.HWI.instance("HWI_INT18").useDispatcher = 1;
+bios.HWI.instance("HWI_INT2").fxn = prog.extern("DXP_EXTINT_Isr");
+bios.MEM.instance("SINE").space = "code/data";
+bios.GBL.CLKOUT = 192.0000;
+bios.LOG.instance("idlLog0").destroy();
+bios.LOG.instance("prdLog0").destroy();
+bios.LOG.instance("prdLog1").destroy();
+bios.LOG.instance("trace").destroy();
+bios.LOG.instance("tskLog0").destroy();
+bios.LOG.instance("tskLog1").destroy();
+bios.GBL.ENABLEINST = 0;
+bios.HST.HOSTLINKTYPE = "NONE";
+bios.RTDX.ENABLERTDX = 0;
+bios.TSK.create("tskCalcSig");
+bios.TSK.instance("tskCalcSig").order = 2;
+bios.TSK.create("tskInitSig");
+bios.TSK.instance("tskInitSig").order = 3;
+bios.TSK.instance("tskCalcSig").comment = "calculate waveform ";
+bios.TSK.instance("tskCalcSig").fxn = prog.extern("DXP_signal_generate");
+bios.TSK.instance("tskInitSig").comment = "initialize wavefrom parameters";
+bios.TSK.instance("tskInitSig").fxn = prog.extern("DXP_signal_calcParams");
+bios.TSK.instance("tskInitSig").stackSize = 256;
+bios.TSK.instance("tskCalcSig").stackSize = 256;
+bios.TSK.instance("tskCalcSig").stackSize = 512;
+bios.TSK.instance("tskInitSig").stackSize = 128;
+bios.TSK.instance("tskInitSig").priority = 2;
+bios.MEM.instance("WAVEFORM").space = "code/data";
+bios.MEM.STACKSEG = prog.get("SARAM");
+bios.MEM.SYSDATASEG = prog.get("SARAM");
+bios.MEM.HWISEG = prog.get("SARAM");
+bios.MEM.CINITSEG = prog.get("SARAM");
+bios.MEM.STACKSEG = prog.get("SDRAM");
+bios.MEM.SYSDATASEG = prog.get("SDRAM");
+bios.MEM.HWISEG = prog.get("SDRAM");
+bios.MEM.CINITSEG = prog.get("SDRAM");
+bios.MEM.STACKSEG = prog.get("SARAM");
+bios.MEM.BIOSSEG = prog.get("SDRAM");
+bios.MEM.BIOSSEG = prog.get("SARAM");
+bios.MEM.TEXTSEG = prog.get("DARAM");
+bios.MEM.TEXTSEG = prog.get("SDRAM");
+bios.MEM.CONSTSEG = prog.get("SARAM");
+bios.MEM.CONSTSEG = prog.get("DARAM");
+
+bios.MEM.instance("SARAM").base = 0x008000;
+bios.MEM.instance("SARAM").len = 0x4000;
+
+bios.MEM.TEXTSEG = prog.get("SDRAM");
+bios.MEM.create("BUFFER");
+bios.MEM.instance("BUFFER").space = "code/data";
+bios.MEM.instance("BUFFER").base = 0x00c000;
+bios.MEM.instance("BUFFER").len = 0x4000;
+bios.MEM.instance("BUFFER").comment = "fast waveform buffer";
+bios.MEM.instance("BUFFER").createHeap = 0;
+
+bios.MEM.instance("SDRAM").base = 0x020000;
+bios.MEM.instance("SDRAM").len = 0x1d8000;
+bios.MEM.create("CONST");
+bios.MEM.instance("CONST").base = 0x1f8000;
+bios.MEM.instance("CONST").len = 0x08000;
+bios.MEM.instance("CONST").comment = "const to keep from crossing page boundaries";
+bios.MEM.instance("CONST").createHeap = 0;
+bios.MEM.CONSTSEG = prog.get("CONST");
+
+//bios.MEM.CINITSEG = prog.get("SDRAM");
+
+bios.HWI.instance("HWI_INT22").fxn = prog.extern("DXP_TIMER_Isr");
+bios.HWI.instance("HWI_INT22").useDispatcher = 1;
+bios.MEM.instance("SDRAM_UPPER").heapSize = 0x20000;
+bios.MEM.instance("SDRAM_UPPER").heapSize = 0x30000;
+bios.MEM.instance("SDRAM_UPPER").heapSize = 0x10000;
+bios.MEM.instance("SDRAM_UPPER").heapSize = 0x20000;
+bios.MEM.instance("SDRAM_UPPER").heapSize = 0x10000;
+bios.MEM.instance("DARAM").len = 0x7f00;
+bios.HWI.instance("HWI_INT22").fxn = prog.extern("HWI_unused", "asm");
+bios.CLK.TIMERSELECT = "Timer 1";
+bios.HWI.instance("HWI_INT4").fxn = prog.extern("DXP_TIMER_Isr");
+bios.HWI.instance("HWI_INT4").useDispatcher = 1;
+bios.MEM.BIOSSEG = prog.get("DARAM");
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+if (config.hasReportedError == false) {
+    prog.gen();
+}

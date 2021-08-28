@@ -1,0 +1,205 @@
+
+estyx todo
+==========
+
+now
+
+- document new directory read behaviour
+- remove utilfiles_5509.c
+- rename VC5509 def to C55X
+  - update tester build to reflect this
+
+test
+
+- close op isn't getting called at clunk time
+
+later
+
+- move source to its own directory
+- make styxsh its own project
+- estyx release checklist
+- get rid of server ops
+- break out everything in estyx_rx switch
+- unit test for local server
+- unit test for usb server
+- put licence & copyright headers in source files
+  - don't forget styxsh.
+- make a recursive perm-modify like above for directories
+- make hardlink nodes
+- styxsh: make direct commands like open, close, stat, create, etc.
+- styxsh: publish cmd2
+- styxsh: make tester so it doesn't read directories with cat, or else have it do a hex dump always, or <evil> have it run ls instead </evil>
+- define multiple open behaviour
+- review use of MAXSTAT in Tstat.  need to see if we can cut this down.
+- document conversion funcs (convm2s etc)
+- write manual
+- generate docs
+- optimise dir_read -- way too many mallocs
+- static files, declared with const structures, instead of dynamic
+  - will need a language for this, like in porus
+- styxsh: need to work out this stupid clunking business.  maybe use objects or something?  exception handling maybe, in a reraise clause?
+
+done
+
+- make the utilfiles functions accept read/write only! right now they don't.
+- fixed-length hex reads in u32 files
+- make a way to modify perms (user, group, & others all at once, r/w only, no x)
+- must we alloc space for node names?
+  - no!
+  - are we doing that?
+    - yes! but not any more ..
+- check wstat -- probably don't need most of it.
+  - right.  now we do eperm only.
+- test util files
+- estyx tester: inc increments twice
+- write doesn't work on /str
+  - Tcreate command used to open files for truncation.  this violates protocol as Tcreate is not to be used for existing files.  fix estyx tester.
+- make topen filter access modes based on ops (or perms?)
+  - might not need to though ..
+  - I think this is working ok basically.  existing permission system makes this work.  we shall see though
+- tester clunks twice on the write-gets-Eperm case.  second clunk fails since it occurs in the exception.  this makes the program exit.
+  - workaround: we ignore exceptions from clunkall
+- make stat call file length fop, right now it reports zero for everything
+- add file length fops to test files, eg msg
+- make permission bits reflect presence of methods in fops
+- make dir permissions correct: r-xr-xr-x etc.
+- get rid of pbit64 and gbit64 and all 64-bit types
+- make Tcreate return Eexist instead of Eperm on file-exists error
+  - no -- we return "not supported" always
+- make tcreate() function
+- why is there a fid->open *and* a file->open?
+  - because multiple fids can hang on a file and only a few may be open.  file->open is actually the number of open fids.  fid opens are binary since a fid may be open by one client at a time.
+- write echo command (for testing writes)
+- newfid: handle .file
+- change fops read/write prototypes to take fid_t only
+- get file from fid now
+- implement dir i/o functions
+- actually do we need a separate fid at all .. ?
+  - yes, an attached fid does not mean that its file is open
+- check MAXSTAT, MAXWELEM
+  - MAXSTAT is used in Tstat case.  It's big.
+  - MAXWELEM is defined by protocol as 16; sets array lengths in fcall struct
+- need malloc on strings in files etc.?
+  - that was done
+  - don't need free since we do not delete files now
+- .. not working -- gives bad fid
+  - fixed bad open dec -- preexisting!?
+- implement new read func system: see below
+- update docs for reading
+
+fid_t
+  Qid
+  server
+  file_t
+file_t
+  dir_t
+   Qid
+server_t
+  list of open fid_ts
+Walkqid
+
+why we have fid_t and file_t
+============================
+
+1. many fid_ts can exist for one file, fid_t does not mean the file is open
+2. we can later make it possible for more than one process to read a file
+
+writing a read op
+=================
+
+- read func gets estyx_fid_t *f, u16 *len, u8 **data, u32 pos
+- read func supplies its own data pointer.  it fills this with data 
+  (adjusting for pos if nec.) and sets len accordingly
+- unlike any other op, read func is responsible for triggering the 
+  tx callback.  it does not do this directly.  instead it calls 
+  estyx_finish_rread.  this marshals the packet and calls the callback
+  (basically convs2m + wr)
+- finish_rread does *not* free the supplied pointer, it only passes it 
+  to the tx callback, this is responsible for concatenating and dma-ing 
+  as needed
+- subsystem may or may not hang on to the pointer for dma.  user must 
+  know about this; estyx can't and doesn't help.  user is responsible 
+  for not clobbering in-use buffers.  read func may have to block for 
+  this.
+- pointer is checked for null.  if it is null this represents an eof
+- read func may return without calling the callback at all, in this case 
+  either nothing happens or an error is issued, depending on ret val
+- if data block is dynamically allocated the read func must free it -- 
+  again the user is responsible for not freeing in-use blocks
+
+here is how to do various things
+================================
+
+1. Find a fid given a qid
+
+Search the server_t for a file having that qid.  Return the fid in it if found.
+
+2. Find a qid given a fid
+
+Same as 1 but search on fid, return qid
+
+3. Find a file_t given a fid
+
+Same as 2 but return file_t *
+
+4. Find qid given file_t
+
+Trivial, in file_t (well -- actually in dir_t)
+
+5. Clunk
+
+4. Find file_t given a qid
+
+(already implemented) Search file tree from root.  Must be exhaustive.  Can also search file table
+
+(?? aren't all the files in a big linked list too?)
+
+walking
+-------
+
+in walking either a fid is reused, ie associated with a new qid, or it is replaced, so a new one is made.  here there is no fid structure so we have to go round manually swapping fids etc.  we have got functions already for this and need only fix them to do this instead of messing about with fid_ts.
+
+dir reads
+=========
+
+- we keep a dri in fid_t.  this is the index of the entry being read
+- we also keep 'drofs' -- directory read offset.  this is the number of bytes into dri that we finished last time.  this is zero if we happen to stop just before a new entry (rare)
+- we begin by converting the current entry.  we do this into dynamically allocated memory of the proper size.  we then copy the conversion into the read buffer beginning with the byte indicated in drofs.
+- we do check file offset.  if this is zero we reset dri and drofs to zero.  otherwise we ignore it since we cannot seek directories.  (well I suppose we could but it would be a huge pain)
+
+comment: protocol currently does not say what happens when you provide a bum offset.  we should state explicitly that it is ignored if not zero since it is at best difficult to check.
+
+note that the "ignore" or "ignore unless zero" rules are probably going to be very common on estyx files.  ought to comment on it in the std.
+
+how to seek dirs
+----------------
+
+to illustrate the pain of seeking directories here is an algorithm:
+
+- given: offset into a dir descriptor
+- begin at entry zero.  run size_d2m on each entry until we shoot past offset.
+- remember the entry that shot past.  that is dri.
+- calculate drofs from the offset at the beginning of the entry.  (so remember that too btw)
+- now do convd2m for the rest of the entries until we fill everything
+
+advantage:
+
+- we can seek in a directory.  yay.
+
+disadvantages
+
+- this must be done *every time we read a dir* -- ie must do this multiple times for a typical dir read
+- for very large dirs this could take a really long time
+- if a dir changes mid-read (could happen) then the host is f***ed.  we would need recovery code for that.  maybe an error or something.
+
+really?
+
+- perhaps most dir reads will be shorter than block size.  hmm.
+- if not perhaps most will fit into 2-3 Rreads
+- algo itself is O(n) on entries.  however reads are (sort of) O(n^2) with short block sizes.
+
+conclusion: won't do it.
+
+Seeking directories is not that useful.  Hosts have space enough for dir data and will probably munge it as they get it anyway.  The algo cost and need for change recovery is the stake in the heart.
+
+Finally, the protocol currently says you can't do it, and that's fine, and it would be dumb to make servers have to implement this painful and not very beneficial thing.  Q.E.D.

@@ -1,0 +1,147 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Release note for C55x CSL</title>
+</head>
+
+<body>
+
+<h1 align="center">Release note for C55xx CSL</h1>
+<blockquote>
+  <blockquote>
+    <ol>
+      <li>
+        <h3>Introduction</h3>
+      </li>
+      <li>
+        <h3>Directory structure</h3>
+      </li>
+      <li>
+        <h3>Setting up build environment to use CSL</h3>
+      </li>
+      <li>
+        <h3>Using CSL examples</h3>
+      </li>
+      <li>
+        <h3>Unarchive the sources</h3>
+      </li>
+      <li>
+        <h3> Bugs fixed</h3>
+      </li>
+    </ol>
+  </blockquote>
+</blockquote>
+<p>&nbsp;</p>
+<ol>
+  <li>
+    <h4>Introduction</h4>
+  </li>
+</ol>
+<blockquote>
+  <p><font face="Verdana" size="2">This is the release note for C55xx CSL version
+     2.31.00.9. This release provides chip support libraries for C5509, C5509A, C5510 and
+  C5502 devices. All the libraries are built using Codegen tools v2.56 with
+  options -mg -q -o3 -d"BIOS_CNT" -d"ALGEBRAIC" . User
+  documentation for C55xx CSL can be found in &quot;TMS320C55x Chip Support
+  Library API Reference Guide&quot; (spru433).</font></p>
+</blockquote>
+<ol start="2">
+  <li>
+    <h4>Directory structure</h4>
+  </li>
+</ol>
+<blockquote>
+  <p><font face="Verdana" size="2">include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  - This directory contains CSL headers. (e.g. csl_dma.h, csl_mcbsp.h etc.)</font></p>
+  <p><font face="Verdana" size="2">lib&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  - This directory contains CSL libraries (e.g. csl5509.lib, csl5509x.lib etc.)
+  and&nbsp;</font></p>
+  <blockquote>
+    <blockquote>
+      <blockquote>
+        <p><font face="Verdana" size="2">&nbsp; archives CSL sources in (csl55xx.src)</font></p>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+        <p><font face="Verdana" size="2">examples&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        - This directory contains CSL examples for c5502 , generic5509 and
+        evm5510.</font></p>
+</blockquote>
+<ol start="3">
+  <li>
+    <h4>Setting up build environment to use CSL</h4>
+  </li>
+</ol>
+<blockquote>
+  <ul>
+    <li><i>In CCS based build environment</i>:</li>
+  </ul>
+  <blockquote>
+    <p><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Assuming CSL is installed at </font><font face="Courier New">&lt;User_Install_Dir&gt;</font><font size="2" face="Courier New">
+        </font><font face="Verdana" size="2">, all the existing CCS project
+        files need to add :</font></p>
+    <blockquote>
+      <blockquote>
+        <p><font face="Courier New">-i&quot;&lt;User_Install_Dir&gt;\include&quot;</font><font face="Verdana" size="2">
+        in compiler options and</font></p>
+        <p><font face="Courier New">-l&quot;&lt;User_Install_Dir&gt;\lib&quot;</font><font size="2" face="Courier New">
+        </font><font face="Verdana" size="2">in linker options</font></p>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+  <ul>
+    <li><i>In Non-CCS based build environment</i>:</li>
+  </ul>
+  <blockquote>
+    <blockquote>
+      <p><font face="Verdana" size="2">Assuming </font><font face="Courier New">&lt;User_Install_Dir&gt;</font><font face="Verdana" size="2">
+      is the directory of CSL installation, all makefiles used to build the
+      application need to add:</font></p>
+      <blockquote>
+        <p><font face="Courier New">-i&quot;&lt;User_Install_Dir&gt;\include&quot;</font><font face="Verdana" size="2">
+        in compiler options and</font></p>
+        <p><font face="Courier New">-l&quot;&lt;User_Install_Dir&gt;\lib&quot;</font><font face="Verdana" size="2">
+        in linker options</font></p>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+</blockquote>
+<ol start="4">
+  <li>
+    <h4>Using CSL examples</h4>
+  </li>
+</ol>
+<blockquote>
+  <p><font face="Verdana" size="2">The CSL examples provided with this release
+  use CSL headers and libraries from CCS installation by default. In order to
+  build the examples using latest CSL in this release, please refer point 3
+  above.</font></p>
+</blockquote>
+<ol start="5">
+  <li>
+    <h4>Unarchive the sources</h4>
+  </li>
+</ol>
+<blockquote>
+  <p><font face="Verdana" size="2">All CSL sources (header files, c files and
+  asm files) can be unarchived using following command:</font></p>
+  <p><font face="Courier New">ar55 x csl55xx.src</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+</blockquote>
+<ol start="6">
+  <li>
+    <h4>Bugs fixed</h4>
+  </li>
+</ol>
+<blockquote>
+   <p><font face="Verdana" size="2">BIOS bug fixed;
+
+</blockquote>
+
+</body>
+
+</html>

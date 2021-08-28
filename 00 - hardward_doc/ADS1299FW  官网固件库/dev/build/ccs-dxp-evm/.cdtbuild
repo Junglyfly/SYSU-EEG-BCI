@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.1.0?>
+
+<ManagedProjectBuildInfo>
+<project id="ccs-dxp-evm.com.ti.ccstudio.buildDefinitions.C5500.ProjectType.1309699172" name="C5500" projectType="com.ti.ccstudio.buildDefinitions.C5500.ProjectType">
+<configuration artifactExtension="out" artifactName="ccs-dxp-evm" description="" id="com.ti.ccstudio.buildDefinitions.C5500.Debug.1468370789" name="Debug" parent="com.ti.ccstudio.buildDefinitions.C5500.Debug">
+<toolChain id="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.DebugToolchain.890969608" name="TI Code Generation Tools" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.DebugToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.linkerDebug.579305401">
+<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1615468886" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+<listOptionValue builtIn="false" value="DEVICE_CONFIGURATION_ID=TMS320C55XX.TMS320C5509A"/>
+<listOptionValue builtIn="false" value="DEVICE_ENDIANNESS=big"/>
+<listOptionValue builtIn="false" value="OUTPUT_FORMAT=COFF"/>
+<listOptionValue builtIn="false" value="CCS_MBS_VERSION=4.2.4"/>
+<listOptionValue builtIn="false" value="LINKER_COMMAND_FILE="/>
+<listOptionValue builtIn="false" value="RUNTIME_SUPPORT_LIBRARY="/>
+<listOptionValue builtIn="false" value="DSPBIOS_VERSION=5.41.10.36"/>
+<listOptionValue builtIn="false" value="OUTPUT_TYPE=bios5Application:rtscApplication:executable"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.885620883" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION" value="4.3.8" valueType="string"/>
+<tool id="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.compilerDebug.872927011" name="C5500 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.compilerDebug">
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DIAG_WARNING.219647506" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DIAG_WARNING" valueType="stringList">
+<listOptionValue builtIn="false" value="225"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.MEMORY_MODEL.694309573" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.MEMORY_MODEL" value="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.MEMORY_MODEL.large" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.PTRDIFF_SIZE.778290894" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.PTRDIFF_SIZE" value="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.PTRDIFF_SIZE.32" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.SILICON_VERSION.1709796433" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.SILICON_VERSION" value="5509A" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.OPT_LEVEL.1508533594" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.OPT_LEVEL.0" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.RTTI.364549513" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.RTTI" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.GCC.1283113839" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.GCC" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DEFINE.1904722657" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DEFINE" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="CCS_C55XX"/>
+<listOptionValue builtIn="false" value="C55X"/>
+<listOptionValue builtIn="false" value="__ccs_c55xx"/>
+<listOptionValue builtIn="false" value="MP_CONFIG_SUBSYS_osal"/>
+<listOptionValue builtIn="false" value="USBHW_DMALOG"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.INCLUDE_PATH.978111236" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.INCLUDE_PATH" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${TCONF_OUTPUT_DIR}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${BIOS_INCLUDE_DIR}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\build\ccs-dxp-evm&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\estyx&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\porus\port\c55x&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\porus\src&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\porus\port\c55x\usbconfig&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\fuel7\multi\common\mp\core&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\server\mmb0test&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\vfstl\porus&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hwdriver\driverdac&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hwdriver\drivermmb0&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hw\mmb0&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hw\C55xxCSLmodified\include&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.VERBOSE_DIAGNOSTICS.1617046832" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.VERBOSE_DIAGNOSTICS" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.LARGE_MEMORY_MODEL.32477306" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.LARGE_MEMORY_MODEL" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.USE_LONG_BRANCH.1976683106" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.USE_LONG_BRANCH" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.OPT_FOR_SPEED.1984441840" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.OPT_FOR_SPEED" value="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.OPT_FOR_SPEED.3" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.CPP_DEFAULT.691117322" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.CPP_DEFAULT" value="false" valueType="boolean"/>
+</tool>
+<tool id="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.linkerDebug.579305401" name="C5500 Linker" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.linkerDebug">
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.OUTPUT_FILE.920747114" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.OUTPUT_FILE" value="&quot;ccs-dxp-evm.out&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.MAP_FILE.69661283" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.MAP_FILE" value="&quot;ccs-dxp-evm.map&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.VERBOSE_DIAGNOSTICS.740989103" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.VERBOSE_DIAGNOSTICS" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.LIBRARY.707468173" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.LIBRARY" valueType="libs">
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hwdriver\driverdac\quarterSineLib.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hw\C55xxCSLmodified\lib\csl5509axmod.lib&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.SEARCH_PATH.1713679194" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.SEARCH_PATH" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${RTDX_LIB_DIR}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${BIOS_LIB_DIR}&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.UNDEF_SYM.1571336098" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.UNDEF_SYM" valueType="stringList">
+<listOptionValue builtIn="false" value="_Sine00"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.RELOCATABLE.1494940846" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.RELOCATABLE" value="false" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.INITIALIZATION_MODEL.485119471" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.INITIALIZATION_MODEL" value="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.INITIALIZATION_MODEL.RAM_MODEL" valueType="enumerated"/>
+</tool>
+<tool id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.1602589657" name="TConf Script Compiler" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool">
+<option id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.BIG_ENDIAN.281492068" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.BIG_ENDIAN" value="true" valueType="boolean"/>
+<option id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.LARGE_DATA_MODEL.485739433" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.LARGE_DATA_MODEL" value="true" valueType="boolean"/>
+<option id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.HUGE_MEMORY_MODEL.25858427" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.HUGE_MEMORY_MODEL" value="true" valueType="boolean"/>
+<option id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.FAR_CODE_MODEL.1092418854" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.FAR_CODE_MODEL" value="true" valueType="boolean"/>
+</tool>
+<macros expandEnvironmentMacros="true"/>
+</toolChain>
+</configuration>
+<configuration artifactExtension="out" artifactName="ccs-dxp-evm" description="" id="com.ti.ccstudio.buildDefinitions.C5500.Release.1474716044" name="Release" parent="com.ti.ccstudio.buildDefinitions.C5500.Release">
+<toolChain id="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.ReleaseToolchain.1268211827" name="TI Code Generation Tools" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.ReleaseToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.linkerRelease.1311555122">
+<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.540902344" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+<listOptionValue builtIn="false" value="DEVICE_CONFIGURATION_ID=TMS320C55XX.TMS320C5509A"/>
+<listOptionValue builtIn="false" value="DEVICE_ENDIANNESS=big"/>
+<listOptionValue builtIn="false" value="OUTPUT_FORMAT=COFF"/>
+<listOptionValue builtIn="false" value="CCS_MBS_VERSION=4.2.4"/>
+<listOptionValue builtIn="false" value="LINKER_COMMAND_FILE="/>
+<listOptionValue builtIn="false" value="RUNTIME_SUPPORT_LIBRARY=rts55x.lib"/>
+<listOptionValue builtIn="false" value="DSPBIOS_VERSION=5.41.10.36"/>
+<listOptionValue builtIn="false" value="OUTPUT_TYPE=bios5Application:rtscApplication:executable"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.631790963" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION" value="4.3.8" valueType="string"/>
+<tool id="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.compilerRelease.1073562273" name="C5500 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.compilerRelease">
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DIAG_WARNING.527420454" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DIAG_WARNING" valueType="stringList">
+<listOptionValue builtIn="false" value="225"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.MEMORY_MODEL.117676934" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.MEMORY_MODEL" value="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.MEMORY_MODEL.large" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.PTRDIFF_SIZE.1577595379" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.PTRDIFF_SIZE" value="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.PTRDIFF_SIZE.32" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.SILICON_VERSION.255338728" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.SILICON_VERSION" value="5509A" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.INCLUDE_PATH.452295592" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.INCLUDE_PATH" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${TCONF_OUTPUT_DIR}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${BIOS_INCLUDE_DIR}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${RTDX_INCLUDE_DIR}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\build\ccs-dxp-evm&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\server&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\server\mmb0test&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hw&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hw\mmb0&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\vfstl&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\vfstl\porus&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hwdriver\testdriver&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hwdriver&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\estyx&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\porus\src&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\porus\port\c55x&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\porus\port\c55x\usbconfig&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\3rdparty\fuel7\multi\common\mp\core&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hw\C55xxCSLmodified\include&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.RTTI.1768297787" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.RTTI" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.GCC.1344814754" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.GCC" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.LARGE_MEMORY_MODEL.129087793" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.LARGE_MEMORY_MODEL" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DEFINE.2105462322" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DEFINE" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="CCS_C55XX"/>
+<listOptionValue builtIn="false" value="C55X"/>
+<listOptionValue builtIn="false" value="__ccs_c55xx"/>
+<listOptionValue builtIn="false" value="MP_CONFIG_SUBSYS_osal"/>
+<listOptionValue builtIn="false" value="USBHW_DMALOG"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.USE_LONG_BRANCH.1220543303" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.USE_LONG_BRANCH" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DEBUGGING_MODEL.1310847207" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DEBUGGING_MODEL" value="com.ti.ccstudio.buildDefinitions.C5500_4.3.compilerID.DEBUGGING_MODEL.SYMDEBUG__NONE" valueType="enumerated"/>
+</tool>
+<tool id="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.linkerRelease.1311555122" name="C5500 Linker" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.exe.linkerRelease">
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.OUTPUT_FILE.155105521" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.OUTPUT_FILE" value="&quot;ccs-dxp-evm.out&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.MAP_FILE.286396613" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.MAP_FILE" value="&quot;ccs-dxp-evm.map&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.LIBRARY.1556608087" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.LIBRARY" valueType="libs">
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hwdriver\driverdac\quarterSineLib.lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_DXP_DEV}\src\hw\C55xxCSLmodified\lib\csl5509axmod.lib&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.SEARCH_PATH.1062578828" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.SEARCH_PATH" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${RTDX_LIB_DIR}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${BIOS_LIB_DIR}&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.UNDEF_SYM.1609083537" superClass="com.ti.ccstudio.buildDefinitions.C5500_4.3.linkerID.UNDEF_SYM" valueType="stringList">
+<listOptionValue builtIn="false" value="_Sine00"/>
+</option>
+</tool>
+<tool id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.1281357999" name="TConf Script Compiler" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool">
+<option id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.BIG_ENDIAN.1062598349" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.BIG_ENDIAN" value="true" valueType="boolean"/>
+<option id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.LARGE_DATA_MODEL.410064849" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.LARGE_DATA_MODEL" value="true" valueType="boolean"/>
+<option id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.HUGE_MEMORY_MODEL.108715433" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.HUGE_MEMORY_MODEL" value="true" valueType="boolean"/>
+<option id="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.FAR_CODE_MODEL.1456605798" superClass="com.ti.rtsc.buildDefinitions.DSPBIOS_5.40.tool.FAR_CODE_MODEL" value="true" valueType="boolean"/>
+</tool>
+<macros expandEnvironmentMacros="true"/>
+</toolChain>
+</configuration>
+<macros/>
+</project>
+</ManagedProjectBuildInfo>

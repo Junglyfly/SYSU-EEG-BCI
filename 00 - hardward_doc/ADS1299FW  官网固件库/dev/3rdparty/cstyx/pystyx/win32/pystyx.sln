@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual C++ Express 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pystyx", "pystyx.vcproj", "{C4FA8502-0C14-4244-9EA5-71279525D546}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3C3A0E1D-8826-4F90-946C-63C57B7E78EE} = {3C3A0E1D-8826-4F90-946C-63C57B7E78EE}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cstyx", "..\..\win32\cstyx.vcproj", "{3C3A0E1D-8826-4F90-946C-63C57B7E78EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C964000-6823-4EDC-A743-6ED7D073042F} = {0C964000-6823-4EDC-A743-6ED7D073042F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "estest", "..\..\..\estyx\estest\estest.vcproj", "{0C964000-6823-4EDC-A743-6ED7D073042F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_test_framework", "C:\boost_1_33_1\libs\test\build\msvc71_proj\unit_test_framework.vcproj", "{5E88A0E9-1932-45DE-902A-61063ED077C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4FA8502-0C14-4244-9EA5-71279525D546}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C4FA8502-0C14-4244-9EA5-71279525D546}.Debug|Win32.Build.0 = Debug|Win32
+		{C4FA8502-0C14-4244-9EA5-71279525D546}.Release|Win32.ActiveCfg = Release|Win32
+		{C4FA8502-0C14-4244-9EA5-71279525D546}.Release|Win32.Build.0 = Release|Win32
+		{3C3A0E1D-8826-4F90-946C-63C57B7E78EE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3C3A0E1D-8826-4F90-946C-63C57B7E78EE}.Debug|Win32.Build.0 = Debug|Win32
+		{3C3A0E1D-8826-4F90-946C-63C57B7E78EE}.Release|Win32.ActiveCfg = Release|Win32
+		{3C3A0E1D-8826-4F90-946C-63C57B7E78EE}.Release|Win32.Build.0 = Release|Win32
+		{0C964000-6823-4EDC-A743-6ED7D073042F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0C964000-6823-4EDC-A743-6ED7D073042F}.Debug|Win32.Build.0 = Debug|Win32
+		{0C964000-6823-4EDC-A743-6ED7D073042F}.Release|Win32.ActiveCfg = Release|Win32
+		{0C964000-6823-4EDC-A743-6ED7D073042F}.Release|Win32.Build.0 = Release|Win32
+		{5E88A0E9-1932-45DE-902A-61063ED077C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5E88A0E9-1932-45DE-902A-61063ED077C5}.Debug|Win32.Build.0 = Debug|Win32
+		{5E88A0E9-1932-45DE-902A-61063ED077C5}.Release|Win32.ActiveCfg = Release|Win32
+		{5E88A0E9-1932-45DE-902A-61063ED077C5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

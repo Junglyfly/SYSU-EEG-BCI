@@ -1,0 +1,49 @@
+
+// :mode=c:wrap=soft:
+
+/*! 
+
+estyx is a generic Styx server library for small embedded systems.
+
+estyx is event-driven.  It does not loop or maintain its own thread, but processes Styx messages one by one, when called.
+
+The estyx implementation of Styx / 9P has the following major characteristics:
+
+- The server supports exactly one file tree
+- The file tree cannot be modified remotely
+- User and group for all nodes is always "nobody" and cannot be changed
+- No support for timestamps
+- Directories are 555 (world read/execute)
+- File permissions depend on read or write-only status; files never have execute permission
+- All files are synthetic, and driven by callbacks
+
+estyx is intended mainly as a protocol stack for devices.  It provides no security or connection facilities, since these are not useful in these situations (point-to-point links, etc.).
+
+\subsection Reading
+
+When a read occurs, estyx locates the file and calls the file's read callback, if there is one.  If there is no read callback, estyx calls the global read callback; if there is no global read callback, estyx returns permission denied.
+
+If there is a read callback, the callback may return Ewait, meaning that data is not yet available.  In this case, estyx does not reply; instead, it saves the transaction.  Later, styx_finish will be called, and the transaction will be completed at that time. 
+
+If data is available and there is no error condition, the read callback returns a pointer to the data, and estyx responds.
+
+\subsection Connections and attachment
+
+estyx supports one connection only.  estyx does not distinguish between remote clients.
+
+This implementation ignores the user ID, aqid, and filesystem name supplied in the attach message, since estyx does not support users or multiple filesystems.  It always returns the root qid and assigns the given fid to root, if the fid is not in use.
+
+Transaction flow
+----------------
+
+User:
+- Wait for packet from USB, by calling usb_move (or eqv)
+- Call styx_process(server, msg, len, data)
+	msg contains a complete message.  must be an addressable char[].  data contains data from a Write.  it is a *char in platform-dependent format. len is len(data + msg) in bytes
+estyx:
+- Calls callbacks as necessary.
+- If a read, the read callback is called.  this may return nothing.
+- To reply, the server calls styx_usr_tx(msg,len,data)
+	again, msg is addressable char[], data is platform dependent
+	On the c55x usr_tx() must pack msg and data.  len is in bytes and includes msg
+- A thread with delayed data must call styx_complete_read(server, file, len, data).  This replies to the latest Tread with data, if there is an open transaction.  One transaction can be open at a time on a file.  In response the server calls usr_tx and uses user code for semaphores.
