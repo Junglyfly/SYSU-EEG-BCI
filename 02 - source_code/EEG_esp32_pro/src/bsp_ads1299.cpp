@@ -77,8 +77,6 @@ void ADS129x_Send_CMD(uint8_t *cmd, uint8_t len, uint8_t cs)
 
 
 
-
-
 void vADS_ControlPin_Init()
 {
     uint8_t tmpcmd[2] = {ADS1299_SDATAC_CMD, 0x00};
@@ -119,44 +117,27 @@ void vADS_ControlPin_Init()
     vTaskDelay(10);
 
     //configuration res
-    tmpcmd[0] = 0x03<<5 | 0x01<<3 | 1<<0;
-    vADS1299_write_register(0x03,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
+    // tmpcmd[0] = 0x03<<5 | 0x01<<3 | 1<<0;
+    // vADS1299_write_register(0x03,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
+    // vTaskDelay(10);
 
 
-    tmpcmd[0] = 0; //1<<7;  //通道 0
-    vADS1299_write_register(0x05,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
 
-    tmpcmd[0] = 0;//1<<7;   //通道 1
-    vADS1299_write_register(0x06,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
-
-    tmpcmd[0] = 0;//1<<7;   //通道 2
-    vADS1299_write_register(0x07,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
+    // // tmpcmd[0] = 0xD0;
+    // // vADS1299_write_register(0x02,tmpcmd,2,ADS_CS);  //1 : test signal generate in internal
+    // // vTaskDelay(10);
 
 
-    tmpcmd[0] = 0; //1<<7;  //通道 3
-    vADS1299_write_register(0x08,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
 
-    tmpcmd[0] = 0;//1<<7;   //通道 4
-    vADS1299_write_register(0x09,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
+    const uint8_t ucCHnSET_Adress[8] = {0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C};
+    //configuration CHnSET: Individual Channel Settings Register
+    for(uint8_t i = 0 ; i < 8 ; i ++)
+    {
+        tmpcmd[0] = 0x00 | 0x04<<4 ;// | 1<<3; // PGA set to 8  //将INP连接至SRB2
+        vADS1299_write_register(ucCHnSET_Adress[i],tmpcmd,2,ADS_CS); 
+        vTaskDelay(10);
+    }
 
-    tmpcmd[0] = 0;//1<<7;   //通道 5
-    vADS1299_write_register(0x0A,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
-
-
-    tmpcmd[0] = 0;//1<<7;  //通道 6
-    vADS1299_write_register(0x0B,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
-
-    tmpcmd[0] = 0;//1<<7;   //通道 7
-    vADS1299_write_register(0x0C,tmpcmd,2,ADS_CS);  //1 : BIASREF signal (AVDD + AVSS) / 2 generated internally
-    vTaskDelay(10);
 
 
     uint8_t ucRx_ID[1];
@@ -175,6 +156,15 @@ void vADS_ControlPin_Init()
     ADS129x_Send_CMD(tmpcmd, 2, ADS_CS);  //turn on continual convention
 
     digitalWrite(ADS_START,HIGH);
+
+
+    // tmpcmd[0] = 0xD0;
+    // vADS1299_write_register(0x02,tmpcmd,2,ADS_CS);  //1 : test signal generate in internal
+    // vTaskDelay(10);
+
+
+
+
 
 
 }
@@ -216,6 +206,7 @@ void vDecodingDat_Upload(uint8_t OriginalData[])
 
 
         iDateTemp ^= 0x00800000;
+
         // if(iDateTemp & 1 <<23)
         //  {
         //     iDateTemp = ~iDateTemp;  // 符号位不变其余为按位取反
@@ -224,15 +215,16 @@ void vDecodingDat_Upload(uint8_t OriginalData[])
         //     iDateTemp *= -1;
         // }
 
-         iDecodingData[j++] = iDateTemp;
+        iDecodingData[j++] = iDateTemp;
 
-           // ADS_1299DEBUG(" %x ",iDateTemp);
+        // ADS_1299DEBUG(" %x ",iDateTemp);
     }
 
 
-        ADS_1299DEBUG("CH0,%d;CH1,%d;Ch2,%d;CH3,%d;CH4,%d;CH5,%d;CH6,%d;CH7,%d;",iDecodingData[0],iDecodingData[1],iDecodingData[2],iDecodingData[3],\
-                                                                                iDecodingData[4],iDecodingData[5],iDecodingData[6],iDecodingData[7]);
+        // ADS_1299DEBUG("CH0,%d;CH1,%d;Ch2,%d;CH3,%d;CH4,%d;CH5,%d;CH6,%d;CH7,%d;",iDecodingData[0],iDecodingData[1],iDecodingData[2],iDecodingData[3],\
+        //                                                                         iDecodingData[4],iDecodingData[5],iDecodingData[6],iDecodingData[7]);
 
+        ADS_1299DEBUG("CH3,%d",iDecodingData[2]);
         ADS_1299DEBUG("\n");
 }
 
@@ -269,7 +261,7 @@ void vADS1299_CaptureData_task(void * parameter)
         if((digitalRead(ADS_DRDY)==0) && (ucReadFlg==0x01))
         {
             vADS1299_Receive_Data(ucADS_Data_RxBuf,28);
-            vDecodingDat_Upload(ucADS_Data_RxBuf);
+            vOriginalData_Upload(ucADS_Data_RxBuf);
             ucReadFlg = 0x00;
         }
         else
@@ -282,7 +274,7 @@ void vADS1299_CaptureData_task(void * parameter)
           //  ADS_1299DEBUG("None %d \n",cent);
         }
 
-        vTaskDelay(50);
+        vTaskDelay(10);
     }
 
 }

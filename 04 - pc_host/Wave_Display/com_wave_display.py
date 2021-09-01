@@ -118,10 +118,10 @@ def Data_unPack(line):
             DataBuff[j] = Data_temp
             j+=1
 
-        Data_Str = "CH0," + str(DataBuff[0])  + ";CH1," + str(DataBuff[1])  + ";CH2," + str(DataBuff[2]) + ";CH3," + str(DataBuff[3]) + \
-                    ";CH4," + str(DataBuff[4]) + ";CH5," + str(DataBuff[5]) + ";CH6," + str(DataBuff[6]) + ";CH7," + str(DataBuff[7]) 
+        # Data_Str = "CH0," + str(DataBuff[0])  + ";CH1," + str(DataBuff[1])  + ";CH2," + str(DataBuff[2]) + ";CH3," + str(DataBuff[3]) + \
+        #             ";CH4," + str(DataBuff[4]) + ";CH5," + str(DataBuff[5]) + ";CH6," + str(DataBuff[6]) + ";CH7," + str(DataBuff[7]) 
 
-        #  Data_Str = "CH6," + str(DataBuff[4]) + ";CH7," + str(DataBuff[5])          
+        Data_Str = "CH3," + str(DataBuff[3]) + ";CH4," + str(DataBuff[4])          
         AddDataToDict(Data_Str)
         #  print(Data_Str)
      else :
@@ -129,16 +129,21 @@ def Data_unPack(line):
 
   
 def ComRecvDeal():
-    t = InitCom('COM5',115200) #串口号和波特率自行设置
-    if(t.isOpen() == True):      
-        t.flushInput() #先清空一下缓冲区
-        while(True):
-            line = t.readline().decode() #line是bytes格式，使用decode()转成字符串
+    try:
+        t = InitCom('COM5',115200) #串口号和波特率自行设置
+        if(t.isOpen() == True):      
+            t.flushInput() #先清空一下缓冲区
+            while(True):
+                line = t.readline().decode() #line是bytes格式，使用decode()转成字符串
 
-            #Data_unPack(line)
-            AddDataToDict(line)#把收到的数据添加到字典中
-    else:
-        print("串口打开失败")
+                Data_unPack(line)
+                #AddDataToDict(line)#把收到的数据添加到字典中
+        else:
+            print("串口打开失败")
+    except ValueError:
+        print("error")
+    finally:
+        print("finnally")
     
  
 def InitCom(port,b):

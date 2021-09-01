@@ -1,0 +1,17 @@
+website :  https://e2e.ti.com/support/data-converters-group/data-converters/f/data-converters-forum/551341/ads1299-srb-bias-and-reference
+
+
+answer :  This is a very interesting problem! Let me first explain what the SRB pins do and what the BIAS pin does. The SRB pins are essentially inputs for a reference input that you intend to connect to multiple channels. The SRB2 pin can be connected to individual channels' positive inputs. The SRB1 pin can be connected to all channels' negative inputs.
+
+The BIAS pin is the equivalent of a right-leg driver for an ECG measurement. It will output a signal that attempts to keep the patient's common-mode voltage within the valid range for the ADC.
+
+This datasheet was actually just updated with a helpful section that discusses the various functions of these pins. You can find it here starting on page 65.
+
+In your case, though, since it is intended to be so modular, I recommend you simply connect all INxN inputs to analog ground (assuming you are using bipolar supplies) and find each electrode voltage in a single-ended fashion. Then you can average each sample to calculate a "reference voltage" to then analyze each individual channel.
+
+
+answer : Take a look at Figure 51 in the datasheet. This shows how the bias connections of multiple devices should be made. Essentially you should have a single device's BIAS amplifier powered on with the BIASINV pins off all the device routed together. This is because each device's BIASINV pin will have the passive average of all of its BIAS_SENS nets. Tying them together applies the passive average of all devices' BIAS_SENS nets to the input of the single active BIAS amplifier.
+
+!!!! notice !!!! 
+TI engineer ： I recommend you simply connect all INxN inputs to analog ground (assuming you are using bipolar supplies) and find each electrode voltage in a single-ended fashion. Then you can average each sample to calculate a "reference voltage" to then analyze each individual channel.
+!!!!
